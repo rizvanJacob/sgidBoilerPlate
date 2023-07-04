@@ -5,6 +5,8 @@ import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { UPDATED } from "../server";
+import { randomUUID } from "crypto";
+import { generatePkcePair } from "@opengovsg/sgid-client";
 
 type User = {
   id: number;
@@ -13,32 +15,50 @@ type User = {
   approved: boolean;
 };
 
-const AUTHORISE = Boolean(process.env.AUTHORISE);
-
+const AUTHORISE = process.env.AUTHORISE === "true";
 const JWT_SECRET = process.env.JWT_SECRET as string;
 const CLIENT_URL = process.env.CLIENT_URL + "/";
 
 const generateUrl = async (req: Request, res: Response) => {
   console.log("clientUrl: ", CLIENT_URL);
-  const login = client.authorizationUrl(
-    "login",
-    "openid",
-    null,
-    CLIENT_URL
-  ).url;
 
-  res.status(200).json({ login, updated: UPDATED });
+  const sessionId = randomUUID();
+  const { codeChallenge, codeVerifier } = generatePkcePair(120);
+
+  await prisma.codeVerifier.create({
+    data: { sessionId, verifier: codeVerifier },
+  });
+
+  const loginUrl = client.authorizationUrl({
+    state: "login",
+    codeChallenge,
+    scope: "openid",
+    nonce: null,
+  }).url;
+
+  res.status(200).json({ loginUrl, sessionId });
 };
 
 const login = async (req: Request, res: Response) => {
   const { code } = req.params;
+  const { sessionId } = req.query;
+  console.log("sessionId: ", sessionId);
 
   try {
-    const { sub: openId } = await client.callback(
-      code as string,
-      null,
-      CLIENT_URL
-    );
+    const { verifier: codeVerifier } = await prisma.codeVerifier.delete({
+      where: { sessionId: sessionId as string },
+      select: { verifier: true },
+    });
+
+    console.log("codeVerifier: ", codeVerifier);
+    const { sub: openId } = await client.callback({
+      code,
+      nonce: null,
+      codeVerifier,
+    });
+
+    console.log("openId: ", openId);
+
     try {
       const userData = await prisma.userModel.findUniqueOrThrow({
         where: { openId } as any,

@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@opengovsg/sgid-client": "^1.0.4",
+    "@opengovsg/sgid-client": "^2.0.0",
     "@prisma/client": "^4.16.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.7",
@@ -33,7 +33,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "prettier-plugin-prisma": "^4.13.0",
-    "prisma": "^4.15.0",
+    "prisma": "^4.16.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
