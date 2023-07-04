@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "concurrently \"cd ./server && npm run dev\" \"cd ./client && npm run dev\" \"cd ./server && npx prisma studio --browser none\"",
+    "build": "cd ./server && npm run build && cd ../client && npm run build",
+    "start": "cd ./server && node ./dist/server.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
