@@ -19,3 +19,6 @@ Required env variables (.env file in ./server):
 - SGID_CLIENT_ID="retrieve from SGID Dev Portal"
 - SGID_CLIENT_SECRET="retrieve from SGID Dev Portal"
 - SGID_PRIVATE_KEY="retrieve from SGID Dev Portal"
+
+## Database:
+You will need to set up your own DB. Configure the server to communicate with your DB by amending ./server/prisma/schema.prisma. Add the database url to the server env files as shown above. 
