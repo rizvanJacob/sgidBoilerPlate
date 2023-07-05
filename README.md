@@ -16,3 +16,6 @@ Required env variables (.env file in ./server):
 - JWT_SECRET="a unique secret to sign and verify JWT tokens"
 - LOGIN_REDIRECT_PATH="a url to direct clients after logging in using SG ID"
 - AUTHORISE="set to true for deployment. set to false to bypass authorization during development"
+- SGID_CLIENT_ID="retrieve from SGID Dev Portal"
+- SGID_CLIENT_SECRET="retrieve from SGID Dev Portal"
+- SGID_PRIVATE_KEY="retrieve from SGID Dev Portal"
