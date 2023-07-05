@@ -25,28 +25,31 @@ const DialogModal = ({
     if (isOpened) {
       ref.current?.showModal();
       document.body.classList.add("modal-open"); // prevent bg scroll
-    } else {
-      ref.current?.close();
-      document.body.classList.remove("modal-open");
     }
   }, [isOpened]);
 
+  const handleClose = () => {
+    console.log("handle close");
+    document.body.classList.remove("modal-open");
+    ref.current?.close();
+    onClose();
+  };
   const proceedAndClose = () => {
     onProceed();
-    onClose();
+    handleClose();
   };
 
   const preventAutoClose = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <dialog
-      className="card shadow-xl w-96 bg-base-100 text-primary overflow-hidden"
-      ref={ref}
-      onClick={onClose}
-      onKeyDown={onClose}
+      className="modal opacity-100 pointer-events-auto"
+      id={ref}
+      onClick={handleClose}
+      onKeyDown={handleClose}
     >
       <div
-        className="flex flex-col gap-y-2 max-w-sm"
+        className="card bg-warning p-4 flex flex-col gap-y-2 max-w-sm"
         onClick={preventAutoClose}
       >
         <h3 className="font-bold text-lg capitalize">{title}</h3>
@@ -54,7 +57,7 @@ const DialogModal = ({
           {message}
         </p>
         <div className="flex justify-end gap-x-2">
-          <button className="btn btn-primary btn-sm" onClick={onClose}>
+          <button className="btn btn-primary btn-sm" onClick={handleClose}>
             {closeButtonText}
           </button>
           <button className="btn btn-primary btn-sm" onClick={proceedAndClose}>

@@ -1,7 +1,7 @@
+import { User } from "../../../../@types/@types.user";
 import EditUserButton from "../../edit/EditUserButton";
-import DeleteUserButton from "../../delete/DeleteUserButton";
-import { User } from "../../../../@types/user";
-import UserTableRow from "../../components/UserTableRow";
+import DeleteUserButton from "./DeleteUserButton";
+import UserTableRow from "./UserTableRow";
 
 export type UsersListProps = {
   users: User[];
@@ -18,20 +18,15 @@ export default function UnapprovedUsersList({
         <UserTableRow />
         <tbody className="bg-white divide-y divide-gray-200">
           {users.map((user: User) => {
-            const accountType = user.accountTypes?.name;
+            const accountType = user.accountType;
             let accountTypeClass = "";
             switch (accountType) {
               case "Admin":
                 accountTypeClass = "text-amber-950";
                 break;
-              case "Trainee Admin":
+              case "User":
                 accountTypeClass = "text-lime-950";
                 break;
-              case "Trainee":
-                accountTypeClass = "text-cyan-950";
-                break;
-              case "Trainer":
-                accountTypeClass = "text-pink-950";
             }
             return (
               <tr key={user.id} className="hover:bg-gray-100">
@@ -41,7 +36,7 @@ export default function UnapprovedUsersList({
                 <td
                   className={`px-2 py-4 whitespace-nowrap text-center text-sm hidden md:table-cell ${accountTypeClass}`}
                 >
-                  {accountType}
+                  {user.accountType}
                 </td>
                 <td className="py-2 text-center whitespace-nowrap">
                   <div className="btn-group flex items-center justify-center">

@@ -4,7 +4,6 @@ import { prisma } from "../config/database";
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { UPDATED } from "../server";
 import { randomUUID } from "crypto";
 import { generatePkcePair } from "@opengovsg/sgid-client";
 
@@ -114,7 +113,9 @@ const findUser = async (req: Request, res: Response) => {
 const isAuth =
   (authorized: number[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Authorizing...");
     if (!AUTHORISE) {
+      console.log("Not authorizing user");
       return next();
     }
     const authorization = req.headers.authorization;

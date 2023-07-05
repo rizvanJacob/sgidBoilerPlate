@@ -13,7 +13,7 @@ const DEFAULT_USER = {
   accountType: 1,
 };
 
-console.log(AUTHORISE);
+console.log("authorise: ", AUTHORISE);
 export const CurrentUserContext = createContext<CurrentUser | null>(null);
 export const TitleContext = createContext<React.Dispatch<
   React.SetStateAction<string>
@@ -27,24 +27,18 @@ function App() {
     if (!AUTHORISE) {
       setCurrentUser(DEFAULT_USER);
     }
-    let clearLogoutTimer: (() => void) | null = null;
     try {
       const token = localStorage.getItem("token") as string;
       const decoded = jwt_decode(token) as UserPayload;
       if (dayjs.unix(decoded.exp).isAfter(dayjs())) {
         setCurrentUser(decoded as CurrentUser);
-        clearLogoutTimer = createLogoutTimer(decoded.exp, setCurrentUser);
+        createLogoutTimer(decoded.exp, setCurrentUser);
       } else {
         localStorage.clear();
       }
     } catch (error) {
       console.log(error);
     }
-
-    return () => {
-      console.log("cleaning up app");
-      if (clearLogoutTimer) clearLogoutTimer();
-    };
   }, []);
 
   return (

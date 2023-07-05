@@ -3,6 +3,7 @@ import NavLink from "./NavLink";
 import UserMenu from "./UserMenu";
 import { MenuItem } from "../../@types/@types.navbar";
 import { MENU_ITEMS } from "./navbarUtilities";
+import HamburgerIcon from "../../assets/HamburgerIcon";
 
 type props = {
   title: string;
@@ -24,19 +25,7 @@ const Navbar = ({ title, openDrawer }: props): JSX.Element => {
           className="btn btn-square btn-ghost text-secondary"
           onClick={openDrawer}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="inline-block w-6 h-6 stroke-current"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
+          <HamburgerIcon />
         </label>
       </div>
       <div className="flex-1 px-2 mx-2 text-secondary font-bold text-xl">

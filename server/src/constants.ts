@@ -1,4 +1,4 @@
-export const enum Account {
+export enum Account {
   Admin = 1,
   User = 2,
 }

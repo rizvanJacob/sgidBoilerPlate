@@ -29,8 +29,8 @@ export type SigningUpUser = {
 };
 
 export type BasicUser = {
-  accountType: Account;
-  displayName: string;
+  accountType?: Account;
+  displayName?: string;
 };
 
 export type NewUser = BasicUser & {
@@ -40,4 +40,9 @@ export type NewUser = BasicUser & {
 export type User = NewUser & {
   id: number;
   approved: boolean;
+};
+
+export type AccountType = {
+  id: number;
+  name: string;
 };
