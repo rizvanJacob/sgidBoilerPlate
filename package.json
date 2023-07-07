@@ -6,8 +6,5 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
-  },
-  "dependencies": {
-    "formik": "^2.4.2"
   }
 }
