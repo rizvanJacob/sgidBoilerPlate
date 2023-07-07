@@ -21,23 +21,13 @@ export default function ApprovedUsersList({
         <UserTableRow />
         <tbody className="bg-white divide-y divide-gray-200">
           {users.map((user: User) => {
-            const accountType = user.accountType;
-            let accountTypeClass = "";
-            switch (accountType) {
-              case "Admin":
-                accountTypeClass = "text-amber-950";
-                break;
-              case "User":
-                accountTypeClass = "text-lime-950";
-                break;
-            }
             return (
               <tr key={user.id} className="hover:bg-gray-100 h-max">
                 <td className="px-2 py-4 whitespace-nowrap text-center overflow-clip text-sm font-medium text-slate-950">
                   {user.displayName}
                 </td>
                 <td
-                  className={`px-2 py-4 whitespace-nowrap text-center text-sm hidden md:table-cell ${accountTypeClass}`}
+                  className={`px-2 py-4 whitespace-nowrap text-center text-sm hidden md:table-cell text-slate-950`}
                 >
                   {user.accountType}
                 </td>
