@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { buildFullUrl } from "../../utilities/fetchUtilities";
-type AuthURLs = {
-  login: string;
-  checkin: string;
-};
+
 
 const HomePage = (): JSX.Element => {
-  const [authUrls, setAuthUrls] = useState<AuthURLs>({
-    login: "",
-    checkin: "",
-  });
+
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code") as string;
   const state = searchParams.get("state") as string;
